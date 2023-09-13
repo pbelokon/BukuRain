@@ -42,4 +42,8 @@ function version() {
   console.log(chalk.blueBright.bold.underline(`${pkg.name} v${pkg.version}`));
 }
 
-export { help, logo, version };
+function display(message) {
+  console.log(chalk.blueBright.underline(message));
+}
+
+export { help, logo, version, display };
