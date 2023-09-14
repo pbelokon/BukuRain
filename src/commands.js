@@ -10,10 +10,10 @@ function help() {
     chalk.blue.bold("USAGE:"),
     chalk.blue(
       `\n
-       -v, --version   Print the version of the compiled package\n
+       -v, --version   Print the version of the package\n
        -h, --help      Print help useful help message\n
        -i, --input     <FILE PATH> Generate HTML files from TXT files. FILE PATH can be a path to an individual file, or to a folder\n
-       -o, --output    <PATH> Name of the output directory. Default is './dist'
+       -o, --output    <PATH> Name of the output directory. Default is './dist', followed by -i or --input FILE PATH
         `
     )
   );
