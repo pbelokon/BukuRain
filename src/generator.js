@@ -18,6 +18,7 @@ async function createFile(path) {
     content = data.split("\r\n\r\n");
   }
 
+  console.log(content);
   fs.writeFile(
     `${distPath}/${parseFileName(path)}.html`,
     parseToHtml(content, path)

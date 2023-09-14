@@ -11,7 +11,7 @@ function parseToHtml(content, filename) {
   }
 
   const lines = content
-    .slice(2)
+    .slice(1)
     .map((line) => `<p>${line}</p>`)
     .join("\n");
 
