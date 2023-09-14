@@ -6,7 +6,7 @@ import { display } from "./commands.js";
 import { createRequire } from "module";
 import { parseToHtml, parseFileName } from "./parser.js";
 
-const distPath = "./public";
+const distPath = "./buku";
 
 // clear destination folder
 fs.emptyDirSync(distPath);
@@ -20,7 +20,7 @@ async function createFile(path) {
   } else if (process.platform === "win32") {
     content = data.split("\r\n\r\n");
   }
-  console.log(content);
+
   fs.writeFile(
     `${distPath}/${parseFileName(path)}.html`,
     parseToHtml(content, path)
