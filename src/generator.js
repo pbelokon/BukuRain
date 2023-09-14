@@ -12,25 +12,38 @@ const distPath = "./public";
 fs.emptyDirSync(distPath);
 
 async function createFile(path) {
-  let data = fs.readFileSync(path, "utf-8");
+  const data = fs.readFileSync(path, "utf-8");
   let content;
 
-  // TODO: add system based file reader
   if (process.platform === "linux" || process.platform === "darwin") {
     content = data.split("\n\n");
   } else if (process.platform === "win32") {
     content = data.split("\r\n\r\n");
   }
-  console.log(`${distPath}${parseFileName(path)}.html`);
-  fs.writeFile(`${distPath}${parseFileName(path)}.html`, parseToHtml(content));
+
+  console.log(path);
+  console.log(content);
+  //fs.writeFile(`${distPath}${parseFileName(path)}.html`, parseToHtml(content));
 }
 
+async function viewDirectory(dirPath) {
+  const files = await fs.readdir(dirPath);
+
+  for (let file of files) {
+    let filePath = path.join(dirPath, file);
+
+    if (path.extname(filePath) === ".txt") {
+      await createFile(filePath);
+    }
+  }
+}
 async function main(filePath) {
   try {
     const stats = await fs.stat(filePath);
-
+    console.log(filePath);
     if (stats.isDirectory()) {
-      // TODO process all files in the directory
+      await viewDirectory(filePath);
+      return;
     } else if (stats.isFile() && path.extname(filePath) === ".txt") {
       await createFile(filePath);
       return;

@@ -19,8 +19,8 @@ function parseToHtml(content) {
 }
 
 function parseFileName(path) {
-  path = path.replace(".", "");
-  return path.replace(".txt", "");
+  const filenameRegex = /[\\/]?([^\\/]+)$/;
+  return path.match(filenameRegex);
 }
 
 export { parseToHtml, parseFileName };

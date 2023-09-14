@@ -22,7 +22,6 @@ try {
     help();
   } else if (args["--input"]) {
     main(args["--input"]);
-    // console.log(args["--input"]);
   } else {
     logo();
   }
