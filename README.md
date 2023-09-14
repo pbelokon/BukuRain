@@ -14,8 +14,8 @@ BukuRain accepts the following options:
 
 * `-v` or `--version`: Print the version of the package
 * `-h` or `--help`: Print help useful help message
-* `-i` or `--input`: FILE PATH Generate HTML files from TXT files. FILE PATH can be a path to an individual file, or to a folder
-* `-o` or `--output`: PATH Name of the output directory. Default is './dist', followed by `-i` or `--input` FILE PATH
+* `-i` or `--input`: Generate HTML files from TXT files. FILE PATH can be a path to an individual file, or to a folder
+* `-o` or `--output`: Name of the output directory. Default is './dist', followed by `-i` or `--input` FILE PATH
   
 ## Features
 As of release 0.0.1 BukuRain can:
