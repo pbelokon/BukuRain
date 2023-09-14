@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { help, logo, version, display } from "../src/commands.js";
+import { main } from "../src/generator.js";
 import arg from "arg";
 
 try {
@@ -20,7 +21,8 @@ try {
   } else if (args["--help"]) {
     help();
   } else if (args["--input"]) {
-    console.log(args["--input"]);
+    main(args["--input"]);
+    // console.log(args["--input"]);
   } else {
     logo();
   }
