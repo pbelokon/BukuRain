@@ -2,7 +2,7 @@ function parseToHtml(content, filename) {
   let title;
   let header;
   // TODO: add parsing for linux based systems
-  if (content[1].startsWith("\r\n")) {
+  if (content.length >= 2 && content[1].startsWith("\r\n")) {
     title = content[0];
     header = `<h1>${content[0]}</h1>`;
   } else {

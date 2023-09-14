@@ -4,24 +4,34 @@ import { main } from "../src/generator.js";
 import arg from "arg";
 
 try {
-  const args = arg({
-    // Types
-    "--help": Boolean,
-    "--version": Boolean,
-    "--input": String,
+  const args = arg(
+    {
+      // Types
+      "--help": Boolean,
+      "--version": Boolean,
+      "--input": String,
+      "--output": String,
 
-    // Aliases
-    "-h": "--help",
-    "-v": "--version",
-    "-i": "--input",
-  });
+      // Aliases
+      "-h": "--help",
+      "-v": "--version",
+      "-i": "--input",
+      "-o": "--output",
+    },
+    { permissive: true }
+  );
 
-  if (args["--version"]) {
-    version();
-  } else if (args["--help"]) {
-    help();
-  } else if (args["--input"]) {
-    main(args["--input"]);
+  const commands = {
+    "--version": version,
+    "--help": help,
+    "--output": () => main(args["--input"], args["--output"]),
+    "--input": () => main(args["--input"]),
+  };
+
+  const selectedCommand = Object.keys(args).find((arg) => commands[arg]);
+
+  if (selectedCommand) {
+    commands[selectedCommand]();
   } else {
     logo();
   }

@@ -6,10 +6,7 @@ import { display } from "./commands.js";
 import { createRequire } from "module";
 import { parseToHtml, parseFileName } from "./parser.js";
 
-const distPath = "./buku";
-
-// clear destination folder
-fs.emptyDirSync(distPath);
+let distPath = "./dist";
 
 async function createFile(path) {
   const data = fs.readFileSync(path, "utf-8");
@@ -39,16 +36,21 @@ async function viewDirectory(dirPath) {
   }
 }
 
-async function main(filePath) {
+async function main(filePath, directory) {
   try {
     const stats = await fs.stat(filePath);
 
+    if (directory) {
+      distPath = directory;
+    }
+
+    // clear destination folder or create it
+    fs.emptyDirSync(distPath);
+
     if (stats.isDirectory()) {
       await viewDirectory(filePath);
-      return;
     } else if (stats.isFile() && path.extname(filePath) === ".txt") {
       await createFile(filePath);
-      return;
     } else {
       display("Could not find file or directory");
     }
