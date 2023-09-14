@@ -20,10 +20,11 @@ async function createFile(path) {
   } else if (process.platform === "win32") {
     content = data.split("\r\n\r\n");
   }
-
-  console.log(path);
   console.log(content);
-  //fs.writeFile(`${distPath}${parseFileName(path)}.html`, parseToHtml(content));
+  fs.writeFile(
+    `${distPath}/${parseFileName(path)}.html`,
+    parseToHtml(content, path)
+  );
 }
 
 async function viewDirectory(dirPath) {
@@ -37,10 +38,11 @@ async function viewDirectory(dirPath) {
     }
   }
 }
+
 async function main(filePath) {
   try {
     const stats = await fs.stat(filePath);
-    console.log(filePath);
+
     if (stats.isDirectory()) {
       await viewDirectory(filePath);
       return;
