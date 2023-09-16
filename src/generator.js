@@ -5,6 +5,7 @@ const path = require("path");
 import { display } from "./commands.js";
 import { createRequire } from "module";
 import { parseToHtml, parseFileName } from "./parser.js";
+import { createSpinner } from "nanospinner";
 
 let distPath = "./dist";
 
@@ -36,8 +37,11 @@ async function viewDirectory(dirPath) {
   }
 }
 
+const sleep = (ms = 400) => new Promise((r) => setTimeout(r, ms));
+
 async function main(filePath, directory) {
   try {
+    const spinner = createSpinner(`Creating files...`).start();
     const stats = await fs.stat(filePath);
 
     if (directory) {
@@ -49,10 +53,14 @@ async function main(filePath, directory) {
 
     if (stats.isDirectory()) {
       await viewDirectory(filePath);
+      await sleep();
+      spinner.success({ text: `Success files were created in ${distPath}` });
     } else if (stats.isFile() && path.extname(filePath) === ".txt") {
       await createFile(filePath);
+      await sleep();
+      spinner.success({ text: `Success file was created in ${distPath}` });
     } else {
-      display("Could not find file or directory");
+      spinner.error({ text: `Could not find file or directory!` });
     }
   } catch (e) {
     console.log(e.message);
