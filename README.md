@@ -16,6 +16,17 @@ BukuRain accepts the following options:
 * `-h` or `--help`: Print help useful help message
 * `-i` or `--input`: Generate HTML files from TXT files. FILE PATH can be a path to an individual file, or to a folder
 * `-o` or `--output`: Name of the output directory. Default is './dist', followed by `-i` or `--input` FILE PATH
+
+## Examples 
+``buku -v``
+
+``buku -h`` 
+
+``buku -i .\examples``
+
+``buku -i .\examples\paragraphs.txt``
+
+``buku -o .\test -i .\examples\paragraphs.txt``
   
 ## Features
 As of release 0.0.1 BukuRain can:
