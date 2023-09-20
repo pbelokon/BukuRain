@@ -4,13 +4,13 @@ const path = require("path");
 
 import { display } from "./commands.js";
 import { createRequire } from "module";
-import { parseToHtml, parseFileName } from "./parser.js";
+import { parseToHtml, parseFileName, mdParseToHtml } from "./parser.js";
 import { createSpinner } from "nanospinner";
 
 let distPath = "./dist";
 
-async function createFile(path) {
-  const data = fs.readFileSync(path, "utf-8");
+async function createFile(filePath) {
+  const data = fs.readFileSync(filePath, "utf-8");
   let content;
 
   if (process.platform === "linux" || process.platform === "darwin") {
@@ -18,11 +18,17 @@ async function createFile(path) {
   } else if (process.platform === "win32") {
     content = data.split("\r\n\r\n");
   }
-
-  fs.writeFile(
-    `${distPath}/${parseFileName(path)}.html`,
-    parseToHtml(content, path)
-  );
+  if (path.extname(filePath) === ".txt") {
+    fs.writeFile(
+      `${distPath}/${parseFileName(filePath)}.html`,
+      parseToHtml(content, filePath)
+    );
+  } else if (path.extname(filePath) === ".md") {
+    fs.writeFile(
+      `${distPath}/${parseFileName(filePath)}.html`,
+      mdParseToHtml(content, filePath)
+    );
+  }
 }
 
 async function viewDirectory(dirPath) {
@@ -56,6 +62,10 @@ async function main(filePath, directory) {
       await sleep();
       spinner.success({ text: `Success files were created in ${distPath}` });
     } else if (stats.isFile() && path.extname(filePath) === ".txt") {
+      await createFile(filePath);
+      await sleep();
+      spinner.success({ text: `Success file was created in ${distPath}` });
+    } else if (stats.isFile() && path.extname(filePath) === ".md") {
       await createFile(filePath);
       await sleep();
       spinner.success({ text: `Success file was created in ${distPath}` });
