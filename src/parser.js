@@ -39,22 +39,24 @@ function mdParseToHtml(content, filename) {
   content.pop();
   content.push(str);
 
+  let slicedLine;
+
+  const italic = /\_([^*><]+)\_/g;
+
   // to convert md lines to html tags
   const htmlContent = content
     .map((line) => {
       if (line.startsWith("# ")) {
-        var slicedLine = line.slice(2);
+        slicedLine = line.slice(2);
         return `<h1>${slicedLine}</h1>`;
       } else if (line.startsWith("## ")) {
-        var slicedLine = line.slice(3);
+        slicedLine = line.slice(3);
         return `<h2>${slicedLine}</h2>`;
       } else if (line.startsWith("### ")) {
-        var slicedLine = line.slice(3);
+        slicedLine = line.slice(3);
         return `<h3>${slicedLine}</h3>`;
-      } else if (line.startsWith("_") && line.endsWith("_")) {
-        var slicedLine = line.slice(1);
-        slicedLine = slicedLine.slice(0, -1);
-        return `<i>${slicedLine}</i>`;
+      } else if (line.match(italic)) {
+        return line.replace(italic, "<i>$1</i>");
       } else {
         return `<p>${line}</p>`;
       }
