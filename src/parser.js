@@ -1,20 +1,4 @@
-function parseToHtml(content, filename) {
-  let title;
-  let header;
-  // TODO: add parsing for linux based systems
-  if (content.length >= 2 && content[1].startsWith("\r\n")) {
-    title = content[0];
-    header = `<h1>${content[0]}</h1>`;
-  } else {
-    title = parseFileName(filename);
-    header = `<p>${content[0]}</p>`;
-  }
-
-  const lines = content
-    .slice(1)
-    .map((line) => `<p>${line}</p>`)
-    .join("\n");
-
+function buildHtml(title, body) {
   return `
     <!doctype html>
     <html lang="en">
@@ -24,13 +8,32 @@ function parseToHtml(content, filename) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-    ${header}
-    ${lines}
+    ${body}
     </body>
     </html>`;
 }
 
-function mdParseToHtml(content, filename) {
+function parseText(content, filename) {
+  let title;
+  let body;
+
+  if (content.length >= 2 && content[1].startsWith("\r\n")) {
+    title = content[0];
+    body = `<h1>${content[0]}</h1>`;
+  } else {
+    title = parseFileName(filename);
+    body = `<p>${content[0]}</p>`;
+  }
+
+  body += content
+    .slice(1)
+    .map((line) => `<p>${line}</p>`)
+    .join("\n");
+
+  return buildHtml(title, body);
+}
+
+function parseMarkDown(content, filename) {
   let title = parseFileName(filename);
 
   // to remove \r\n at the end of content
@@ -44,7 +47,7 @@ function mdParseToHtml(content, filename) {
   const italic = /\_([^*><]+)\_/g;
 
   // to convert md lines to html tags
-  const htmlContent = content
+  const body = content
     .map((line) => {
       if (line.startsWith("# ")) {
         slicedLine = line.slice(2);
@@ -63,18 +66,7 @@ function mdParseToHtml(content, filename) {
     })
     .join("\n");
 
-  return `
-    <!doctype html>
-    <html lang="en">
-    <head>
-    <meta charset="utf-8">
-    <title>${title}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-    ${htmlContent}
-    </body>
-    </html>`;
+  return buildHtml(title, body);
 }
 
 function parseFileName(path) {
@@ -83,4 +75,4 @@ function parseFileName(path) {
   return name[1];
 }
 
-export { parseToHtml, parseFileName, mdParseToHtml };
+export { parseText, parseFileName, parseMarkDown };

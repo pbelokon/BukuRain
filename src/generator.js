@@ -1,43 +1,34 @@
-const require = createRequire(import.meta.url);
-const fs = require("fs-extra");
-const path = require("path");
-
-import { display } from "./commands.js";
-import { createRequire } from "module";
-import { parseToHtml, parseFileName, mdParseToHtml } from "./parser.js";
+import fs from "fs-extra";
+import path from "path";
+import { parseText, parseFileName, parseMarkDown } from "./parser.js";
 import { createSpinner } from "nanospinner";
 
 let distPath = "./dist";
 
 async function createFile(filePath) {
   const data = fs.readFileSync(filePath, "utf-8");
-  let content;
+  let content = data.split("\r\n\r\n"); // TODO: add multi platform file ending regex
 
-  if (process.platform === "linux" || process.platform === "darwin") {
-    content = data.split("\n\n");
-  } else if (process.platform === "win32") {
-    content = data.split("\r\n\r\n");
-  }
   if (path.extname(filePath) === ".txt") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      parseToHtml(content, filePath)
+      parseText(content, filePath)
     );
   } else if (path.extname(filePath) === ".md") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      mdParseToHtml(content, filePath)
+      parseMarkDown(content, filePath)
     );
   }
 }
 
-async function viewDirectory(dirPath) {
+async function convertDirectory(dirPath) {
   const files = await fs.readdir(dirPath);
 
   for (let file of files) {
     let filePath = path.join(dirPath, file);
 
-    if (path.extname(filePath) === ".txt") {
+    if (path.extname(filePath) === ".txt" || path.extname(filePath) === ".md") {
       await createFile(filePath);
     }
   }
@@ -58,7 +49,7 @@ async function main(filePath, directory) {
     fs.emptyDirSync(distPath);
 
     if (stats.isDirectory()) {
-      await viewDirectory(filePath);
+      await convertDirectory(filePath);
       await sleep();
       spinner.success({ text: `Success files were created in ${distPath}` });
     } else if (stats.isFile() && path.extname(filePath) === ".txt") {

@@ -1,9 +1,6 @@
 import chalk from "chalk";
 import gradient from "gradient-string";
-
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const pkg = require("../package.json");
+import pkg from "../package.json" assert { type: "json" };
 
 function help() {
   console.log(
