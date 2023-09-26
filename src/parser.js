@@ -1,7 +1,7 @@
-function buildHtml(title, body) {
+function buildHtml(title, body, lang) {
   return `
     <!doctype html>
-    <html lang="en">
+    <html lang=${lang}>
     <head>
     <meta charset="utf-8">
     <title>${title}</title>
@@ -13,7 +13,7 @@ function buildHtml(title, body) {
     </html>`;
 }
 
-function parseText(content, filename) {
+function parseText(content, filename, lang) {
   let title;
   let body;
 
@@ -30,10 +30,10 @@ function parseText(content, filename) {
     .map((line) => `<p>${line}</p>`)
     .join("\n");
 
-  return buildHtml(title, body);
+  return buildHtml(title, body, lang);
 }
 
-function parseMarkDown(content, filename) {
+function parseMarkDown(content, filename, lang) {
   let title = parseFileName(filename);
 
   // to remove \r\n at the end of content
@@ -66,7 +66,7 @@ function parseMarkDown(content, filename) {
     })
     .join("\n");
 
-  return buildHtml(title, body);
+  return buildHtml(title, body, lang);
 }
 
 function parseFileName(path) {

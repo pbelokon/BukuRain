@@ -11,12 +11,14 @@ try {
       "--version": Boolean,
       "--input": String,
       "--output": String,
+      "--lang": String,
 
       // Aliases
       "-h": "--help",
       "-v": "--version",
       "-i": "--input",
       "-o": "--output",
+      "-l": "--lang",
     },
     { permissive: true }
   );
@@ -24,8 +26,8 @@ try {
   const commands = {
     "--version": version,
     "--help": help,
-    "--output": () => main(args["--input"], args["--output"]),
-    "--input": () => main(args["--input"]),
+    "--output": () => main(args["--input"], args["--lang"], args["--output"]),
+    "--input": () => main(args["--input"], args["--lang"]),
   };
 
   const selectedCommand = Object.keys(args).find((arg) => commands[arg]);
