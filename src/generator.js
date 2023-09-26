@@ -5,6 +5,7 @@ import { parseText, parseFileName, parseMarkDown } from "./parser.js";
 import { createSpinner } from "nanospinner";
 
 let distPath = "./dist";
+let lang = "en-CA";
 
 async function createFile(filePath) {
   const data = fs.readFileSync(filePath, "utf-8");
@@ -13,12 +14,12 @@ async function createFile(filePath) {
   if (path.extname(filePath) === ".txt") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      parseText(content, filePath)
+      parseText(content, filePath, lang)
     );
   } else if (path.extname(filePath) === ".md") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      parseMarkDown(content, filePath)
+      parseMarkDown(content, filePath, lang)
     );
   }
 }
@@ -37,13 +38,17 @@ async function convertDirectory(dirPath) {
 
 const sleep = (ms = 400) => new Promise((r) => setTimeout(r, ms));
 
-async function main(filePath, directory) {
+async function main(filePath, language, directory) {
   try {
     const spinner = createSpinner(`Creating files...`).start();
     const stats = await fs.stat(filePath);
 
     if (directory) {
       distPath = directory;
+    }
+
+    if (language != undefined) {
+      lang = language;
     }
 
     // clear destination folder or create it
