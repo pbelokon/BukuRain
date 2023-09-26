@@ -1,3 +1,4 @@
+"use strict";
 function buildHtml(title, body) {
   return `
     <!doctype html>
@@ -45,6 +46,7 @@ function parseMarkDown(content, filename) {
   let slicedLine;
 
   const italic = /\_([^*><]+)\_/g;
+  const horizontalRule = /^( ?[-_*]){3,} ?[\t]*$/g;
 
   // to convert md lines to html tags
   const body = content
@@ -60,6 +62,8 @@ function parseMarkDown(content, filename) {
         return `<h3>${slicedLine}</h3>`;
       } else if (line.match(italic)) {
         return line.replace(italic, "<i>$1</i>");
+      } else if (line.match(horizontalRule)) {
+        return line.replace(horizontalRule, "<hr>");
       } else {
         return `<p>${line}</p>`;
       }

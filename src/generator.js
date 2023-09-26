@@ -1,3 +1,4 @@
+"use strict";
 import fs from "fs-extra";
 import path from "path";
 import { parseText, parseFileName, parseMarkDown } from "./parser.js";
