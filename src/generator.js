@@ -38,7 +38,7 @@ async function convertDirectory(dirPath) {
 
 const sleep = (ms = 400) => new Promise((r) => setTimeout(r, ms));
 
-async function main(filePath, language, directory) {
+async function main(filePath, language, directory, configPath) {
   try {
     const spinner = createSpinner(`Creating files...`).start();
     const stats = await fs.stat(filePath);

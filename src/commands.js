@@ -11,6 +11,7 @@ function help() {
        -h, --help      Print help useful help message\n
        -i, --input     <FILE PATH> Generate HTML files from TXT files. FILE PATH can be a path to an individual file, or to a folder\n
        -o, --output    <PATH> Name of the output directory. Default is './dist', followed by -i or --input FILE PATH
+       -c, --config    <CONFIG FILE PATH> The TOML-based config file path. Missing options will use default settings
         `
     )
   );

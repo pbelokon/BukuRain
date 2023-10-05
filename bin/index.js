@@ -12,6 +12,7 @@ try {
       "--input": String,
       "--output": String,
       "--lang": String,
+      "--config": String,
 
       // Aliases
       "-h": "--help",
@@ -19,6 +20,7 @@ try {
       "-i": "--input",
       "-o": "--output",
       "-l": "--lang",
+      "-c": "--config"
     },
     { permissive: true }
   );
@@ -28,6 +30,7 @@ try {
     "--help": help,
     "--output": () => main(args["--input"], args["--lang"], args["--output"]),
     "--input": () => main(args["--input"], args["--lang"]),
+    "--config": () => main(args["--input"], args["--lang"], args["--output"], args["--config"])
   };
 
   const selectedCommand = Object.keys(args).find((arg) => commands[arg]);
