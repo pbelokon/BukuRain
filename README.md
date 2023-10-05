@@ -19,6 +19,7 @@ BukuRain accepts the following options:
 - `-h` or `--help`: Print help useful help message
 - `-i` or `--input`: Generate HTML files from TXT files. FILE PATH can be a path to an individual file, or to a folder. Also, MD file is able to be converted into the .HTML.
 - `-o` or `--output`: Name of the output directory. Default is './dist', followed by `-i` or `--input` FILE PATH
+- `-c` or `--config`: The TOML-based config file path. Missing options will use default settings
 
 ## Examples
 
@@ -31,6 +32,8 @@ BukuRain accepts the following options:
 `buku -i .\examples\paragraphs.txt` || `buku -i .\examples\test.md`
 
 `buku -o .\test -i .\examples\paragraphs.txt`
+
+`buku -i .\examples -c config.toml`
 
 ## Features
 
