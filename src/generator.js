@@ -3,6 +3,7 @@ import fs from "fs-extra";
 import path from "path";
 import { parseText, parseFileName, parseMarkDown } from "./parser.js";
 import { createSpinner } from "nanospinner";
+import * as TOML from '@ltd/j-toml';
 
 let distPath = "./dist";
 let lang = "en-CA";
@@ -49,6 +50,18 @@ async function main(filePath, language, directory, configPath) {
 
     if (language != undefined) {
       lang = language;
+    }
+
+    // get settings from config
+    const config = fs.readFileSync(configPath, "utf-8");
+    if (config) {
+        const configTable = TOML.parse(config);        
+        if (configTable.lang != undefined) {
+            lang = configTable.lang
+        }
+        if (configTable.output != undefined) {
+            distPath = configTable.output
+        }
     }
 
     // clear destination folder or create it
