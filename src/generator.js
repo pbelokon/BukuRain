@@ -1,9 +1,9 @@
 "use strict";
 import fs from "fs-extra";
 import path from "path";
-import { parseText, parseFileName, parseMarkDown } from "./parser.js";
+import { buildFromMarkDown, parseFileName, buildFromText } from "./parser.js";
 import { createSpinner } from "nanospinner";
-import * as TOML from '@ltd/j-toml';
+import * as TOML from "@ltd/j-toml";
 
 let distPath = "./dist";
 let lang = "en-CA";
@@ -15,12 +15,12 @@ async function createFile(filePath) {
   if (path.extname(filePath) === ".txt") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      parseText(content, filePath, lang)
+      buildFromText(content, filePath, lang)
     );
   } else if (path.extname(filePath) === ".md") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      parseMarkDown(content, filePath, lang)
+      buildFromMarkDown(content, filePath, lang)
     );
   }
 }
@@ -55,13 +55,13 @@ async function main(filePath, language, directory, configPath) {
     // get settings from config
     const config = fs.readFileSync(configPath, "utf-8");
     if (config) {
-        const configTable = TOML.parse(config);        
-        if (configTable.lang != undefined) {
-            lang = configTable.lang
-        }
-        if (configTable.output != undefined) {
-            distPath = configTable.output
-        }
+      const configTable = TOML.parse(config);
+      if (configTable.lang != undefined) {
+        lang = configTable.lang;
+      }
+      if (configTable.output != undefined) {
+        distPath = configTable.output;
+      }
     }
 
     // clear destination folder or create it

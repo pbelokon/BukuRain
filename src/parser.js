@@ -1,4 +1,6 @@
 "use strict";
+
+// Create html string
 function buildHtml(title, body, lang) {
   return `
     <!doctype html>
@@ -14,7 +16,8 @@ function buildHtml(title, body, lang) {
     </html>`;
 }
 
-function parseText(content, filename, lang) {
+// Parse text to title and body
+function parseText(content, filename) {
   let title;
   let body;
 
@@ -31,34 +34,32 @@ function parseText(content, filename, lang) {
     .map((line) => `<p>${line}</p>`)
     .join("\n");
 
+  return { title, body };
+}
+
+// Build html content from text
+function buildFromText(content, filename, lang) {
+  const { title, body } = parseText(content, filename);
   return buildHtml(title, body, lang);
 }
 
-function parseMarkDown(content, filename, lang) {
+// Parse markdown to title and body
+function parseMarkDown(content, filename) {
   let title = parseFileName(filename);
-
-  // to remove \r\n at the end of content
-  let str = content.slice(-1).toString();
-  str = str.slice(0, -2);
-  content.pop();
-  content.push(str);
-
-  let slicedLine;
 
   const italic = /\_([^*><]+)\_/g;
   const horizontalRule = /^( ?[-_*]){3,} ?[\t]*$/g;
 
-  // to convert md lines to html tags
   const body = content
     .map((line) => {
       if (line.startsWith("# ")) {
-        slicedLine = line.slice(2);
+        const slicedLine = line.slice(2);
         return `<h1>${slicedLine}</h1>`;
       } else if (line.startsWith("## ")) {
-        slicedLine = line.slice(3);
+        const slicedLine = line.slice(3);
         return `<h2>${slicedLine}</h2>`;
       } else if (line.startsWith("### ")) {
-        slicedLine = line.slice(3);
+        const slicedLine = line.slice(3);
         return `<h3>${slicedLine}</h3>`;
       } else if (line.match(italic)) {
         return line.replace(italic, "<i>$1</i>");
@@ -70,6 +71,12 @@ function parseMarkDown(content, filename, lang) {
     })
     .join("\n");
 
+  return { title, body };
+}
+
+// Build html content from markdown
+function buildFromMarkDown(content, filename, lang) {
+  const { title, body } = parseMarkDown(content, filename);
   return buildHtml(title, body, lang);
 }
 
@@ -79,4 +86,4 @@ function parseFileName(path) {
   return name[1];
 }
 
-export { parseText, parseFileName, parseMarkDown };
+export { buildFromMarkDown, parseFileName, buildFromText };
