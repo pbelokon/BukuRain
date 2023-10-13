@@ -9,7 +9,7 @@ let distPath = "./dist";
 let lang = "en-CA";
 
 async function createFile(filePath) {
-  const data = fs.readFileSync(filePath, "utf-8");
+  const data = fs.readFile(filePath, "utf-8");
   let content = data.split("\r\n\r\n"); // TODO: add multi platform file ending regex
 
   if (path.extname(filePath) === ".txt") {
