@@ -20,7 +20,7 @@ try {
       "-i": "--input",
       "-o": "--output",
       "-l": "--lang",
-      "-c": "--config"
+      "-c": "--config",
     },
     { permissive: true }
   );
@@ -30,7 +30,7 @@ try {
     "--help": help,
     "--output": () => main(args["--input"], args["--lang"], args["--output"]),
     "--input": () => main(args["--input"], args["--lang"]),
-    "--config": () => main(args["--input"], undefined, undefined, args["--config"])
+    "--config": () => main(args["--input"], args["--lang"], args["--config"]),
   };
 
   const selectedCommand = Object.keys(args).find((arg) => commands[arg]);

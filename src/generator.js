@@ -1,4 +1,5 @@
 "use strict";
+
 import fs from "fs-extra";
 import path from "path";
 import { buildFromMarkDown, parseFileName, buildFromText } from "./parser.js";
@@ -9,7 +10,7 @@ let distPath = "./dist";
 let lang = "en-CA";
 
 async function createFile(filePath) {
-  const data = fs.readFile(filePath, "utf-8");
+  const data = fs.readFileSync(filePath, "utf-8");
   let content = data.split("\r\n\r\n"); // TODO: add multi platform file ending regex
 
   if (path.extname(filePath) === ".txt") {
@@ -53,8 +54,8 @@ async function main(filePath, language, directory, configPath) {
     }
 
     // get settings from config
-    const config = fs.readFileSync(configPath, "utf-8");
-    if (config) {
+    if (configPath) {
+      const config = fs.readFileSync(configPath, "utf-8");
       const configTable = TOML.parse(config);
       if (configTable.lang != undefined) {
         lang = configTable.lang;
