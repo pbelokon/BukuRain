@@ -8,10 +8,12 @@ function buildHtml(title, body, lang) {
     <head>
     <meta charset="utf-8">
     <title>${title}</title>
+    <link rel="stylesheet" href="../prism/prism.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
     ${body}
+    <script src="../prism/prism.js"></script>
     </body>
     </html>`;
 }
@@ -43,6 +45,16 @@ function buildFromText(content, filename, lang) {
   return buildHtml(title, body, lang);
 }
 
+// Parse code blocks in markdown
+function parseCodeBlocks(body) {
+  const codeBlockRegex = /```(.*?)\n(.*?)\n```/gs;
+
+  return body.replace(codeBlockRegex, (match, language, code) => {
+    const className = language ? `language-${language}` : "";
+    return `<pre><code class="${className}">${code.trim()}</code></pre>`;
+  });
+}
+
 // Parse markdown to title and body
 function parseMarkDown(content, filename) {
   let title = parseFileName(filename);
@@ -66,12 +78,14 @@ function parseMarkDown(content, filename) {
       } else if (line.match(horizontalRule)) {
         return line.replace(horizontalRule, "<hr>");
       } else {
-        return `<p>${line}</p>`;
+        return line;
       }
     })
     .join("\n");
 
-  return { title, body };
+  const bodyWithCodeBlocks = parseCodeBlocks(body);
+
+  return { title, body: bodyWithCodeBlocks };
 }
 
 // Build html content from markdown
