@@ -41,3 +41,4 @@ As of release 0.0.1 BukuRain can:
 
 - allow the user to specify a different output directory using `--output` or `-o`
 - mark the first line as the title of the page, as long as first line followed by two blank lines
+- markdown fenced blocks allow code blocks syntax highlighting for most programming languages
