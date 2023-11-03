@@ -2,15 +2,6 @@
 
 BukuRain (Book Online) is a CLI tool written in javascript that helps you with generation of static html pages from any text file you provide.
 
-## Installation
-
-##### Before instalation make sure to download ode for your PC using the following link: https://nodejs.dev/
-
-1. Clone the repository to your computer
-2. Using CLI of your choice navigate to the directory where the repository was cloned into.
-3. Run `npm install -g` or `npm i -g` to download the dependencies globally
-4. Run buku for help
-
 ## Usage
 
 BukuRain accepts the following options:

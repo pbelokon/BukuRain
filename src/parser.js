@@ -59,6 +59,7 @@ function parseCodeBlocks(body) {
 function parseMarkDown(content, filename) {
   let title = parseFileName(filename);
 
+  // eslint-disable-next-line no-useless-escape
   const italic = /\_([^*><]+)\_/g;
   const horizontalRule = /^( ?[-_*]){3,} ?[\t]*$/g;
 

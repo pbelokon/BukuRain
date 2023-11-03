@@ -16,12 +16,12 @@ async function createFile(filePath) {
   if (path.extname(filePath) === ".txt") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      buildFromText(content, filePath, lang)
+      buildFromText(content, filePath, lang),
     );
   } else if (path.extname(filePath) === ".md") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      buildFromMarkDown(content, filePath, lang)
+      buildFromMarkDown(content, filePath, lang),
     );
   }
 }

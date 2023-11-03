@@ -22,7 +22,7 @@ try {
       "-l": "--lang",
       "-c": "--config",
     },
-    { permissive: true }
+    { permissive: true },
   );
 
   const commands = {

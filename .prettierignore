@@ -1,0 +1,5 @@
+node_modules
+prism
+examples
+*.md
+*.json
