@@ -12,16 +12,15 @@ let lang = "en-CA";
 async function createFile(filePath) {
   const data = fs.readFileSync(filePath, "utf-8");
   let content = data.split("\r\n\r\n"); // TODO: add multi platform file ending regex
-
   if (path.extname(filePath) === ".txt") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      buildFromText(content, filePath, lang),
+      buildFromText(content, filePath, lang)
     );
   } else if (path.extname(filePath) === ".md") {
     fs.writeFile(
       `${distPath}/${parseFileName(filePath)}.html`,
-      buildFromMarkDown(content, filePath, lang),
+      buildFromMarkDown(content, filePath, lang)
     );
   }
 }
