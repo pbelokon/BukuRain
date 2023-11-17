@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { buildFromText } from "../src/parser.js";
+import { buildFromText, parseFileName } from "../src/parser.js";
 
 test("properly creates html body with plain text", () => {
   const html = `
@@ -18,4 +18,13 @@ test("properly creates html body with plain text", () => {
     </html>`;
 
   expect(buildFromText(["hello"], "./examples.txt", "en-CA")).toBe(html);
+});
+
+test("properly parses file name from path", () => {
+  const path = "/path/to/example-file.txt";
+  const expectedFileName = "example-file";
+
+  const result = parseFileName(path);
+
+  expect(result).toBe(expectedFileName);
 });
