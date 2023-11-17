@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import fs from "fs-extra";
-import { main } from "../src/generator";
+import { main } from "../src/generator.js";
 
 const testOutputPath = "./outputTest";
 

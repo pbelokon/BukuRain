@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { buildFromText } from "../src/parser";
+import { buildFromText } from "../src/parser.js";
 
 test("properly creates html body with plain text", () => {
   const html = `
