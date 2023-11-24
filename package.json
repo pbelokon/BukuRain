@@ -1,6 +1,6 @@
 {
   "name": "bukurain",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A CLI used to create html files from text file",
   "main": "index.js",
   "bin": {
